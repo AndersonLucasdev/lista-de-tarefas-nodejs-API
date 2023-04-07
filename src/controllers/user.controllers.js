@@ -1,7 +1,18 @@
-const soma = (res, res) => {
-    const soma = 100 + 1
+const create = (req, res) => {
+    const {email, password, confirmpassword} = req.body
 
-    res.send(soma)
+    if (!email || !password || !confirmpassword) {
+        res.status(400).send({message: "submite all fields for registration"})
+
+    }
+
+    res.status(201).send({
+        message: "User created successfully",
+        user: { 
+            email,
+        },
+    })
 }
 
-module.exports = {soma}
+
+module.exports = {create}
