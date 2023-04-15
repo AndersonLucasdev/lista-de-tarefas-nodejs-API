@@ -3,14 +3,14 @@ import mongoose from "mongoose"
 
 const cadastro = async (req, res) => {
     const {
-        descricao
+        descricao, dia
     } = req.body
 
     // verifica se um campo não foi digitado
-    if (!descricao) {
+    if (!descricao || !dia) {
         res.status(400).send({message: "há um campo vazio"})
 
-    }else {
+    } else {
 
         const atividade = await atividadeService.createService(req.body)
 
@@ -22,7 +22,8 @@ const cadastro = async (req, res) => {
                 {  
                     user: {
                         id: atividade._id,
-                        atividade
+                        descricao,
+                        dia
                     },
                     message: "atividade cadastrada com sucesso"
             }
@@ -56,8 +57,43 @@ const findbyId = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    const {
+        descricao, dia
+    } = req.body
+
+    // verifica se um campo não foi digitado
+    if (!descricao && !dia) {
+        res.status(400).send({message: "coloque pelo menos um campo"})
+    } else {
+
+        const id = req.params.id
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send({message:"Id invalido"})
+        } else {
+
+            const active = await atividadeService.findbyIdService(id)
+
+            if (!active) {
+                res.status(400).send({message: "Erro na criação da atividade"})
+            } else {
+
+                await atividadeService.updateService(
+                    id,
+                    descricao,
+                    dia
+                )
+
+            res.send({message:"Atividade atualizada com sucesso"})
+            }
+        }
+    }
+}
+
 export {
     cadastro,
     findAll,
-    findbyId
+    findbyId,
+    update
 }
