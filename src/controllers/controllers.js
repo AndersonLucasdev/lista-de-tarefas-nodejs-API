@@ -1,5 +1,5 @@
 import atividadeService from "../services/services.js"
-import mongoose from "mongoose"
+
 
 const cadastro = async (req, res) => {
     const {
@@ -42,19 +42,10 @@ const findAll = async (req, res) => {
 }
 
 const findbyId = async (req, res) => {
-    const id = req.params.id
-    
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).send({message:"Id invalido"})
-    }
+    const active = req.active
 
-    const active = await atividadeService.findbyIdService(id)
-    
-    if (!active) {
-        return res.status(400).send({message:"Usuario não existe"})
-    }   else {
-        res.send(active)
-    }
+    res.send(active)
+
 }
 
 const update = async (req, res) => {
@@ -62,32 +53,19 @@ const update = async (req, res) => {
         descricao, dia
     } = req.body
 
-    // verifica se um campo não foi digitado
     if (!descricao && !dia) {
         res.status(400).send({message: "coloque pelo menos um campo"})
     } else {
 
-        const id = req.params.id
+        const {id, active} = req
 
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send({message:"Id invalido"})
-        } else {
+        await atividadeService.updateService(
+            id,
+            descricao,
+            dia
+        )
 
-            const active = await atividadeService.findbyIdService(id)
-
-            if (!active) {
-                res.status(400).send({message: "Erro na criação da atividade"})
-            } else {
-
-                await atividadeService.updateService(
-                    id,
-                    descricao,
-                    dia
-                )
-
-            res.send({message:"Atividade atualizada com sucesso"})
-            }
-        }
+        res.send({message:"Atividade atualizada com sucesso"})
     }
 }
 
