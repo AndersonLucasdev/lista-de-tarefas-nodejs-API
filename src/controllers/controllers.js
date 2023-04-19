@@ -84,9 +84,28 @@ const update = async (req, res) => {
     }
 }
 
+const remove = async (req, res) => {
+    try {
+        const {id} = req
+
+        if(!id) {
+            return res.status(400).json({message: "Id invalido"})
+        }
+
+        const removido =  await atividadeService.deleteByID(id)
+
+        res.status(200).json({message: "atividade excluida com sucesso", removido})
+    }
+
+    catch (error) {
+        res.status(500).send({message: error.message})
+    }
+}
+
 export {
     cadastro,
     findAll,
     findbyId,
-    update
+    update,
+    remove
 }

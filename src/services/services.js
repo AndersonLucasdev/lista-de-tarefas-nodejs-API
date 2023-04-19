@@ -6,18 +6,25 @@ const findAllService = () => atividades.find()
 
 const findbyIdService = (id) => atividades.findById(id)
 
-const updateService = (id,
+const updateService = (
+    id,
     descricao,
     dia
-      ) => 
-      atividades.findOneAndUpdate(
+    ) => 
+    atividades.findOneAndUpdate(
         {_id: id},
-        {descricao, dia}
-        )
+        {descricao,
+        dia
+    }, 
+    {new: true}
+    )
+
+const deleteByID = (id) => atividades.findByIdAndDelete(id)
 
 export default {
     createService,
     findAllService,
     findbyIdService,
-    updateService
+    updateService,
+    deleteByID
 }
