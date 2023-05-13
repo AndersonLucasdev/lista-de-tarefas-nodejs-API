@@ -4,11 +4,6 @@ const atividadeSchema = new mongoose.Schema({
     descricao: {
         type: String,
         required: true
-    },
-    
-    dia: {
-        type: String,
-        required: true
     }
 })
 

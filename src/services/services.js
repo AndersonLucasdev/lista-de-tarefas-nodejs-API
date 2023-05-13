@@ -8,13 +8,11 @@ const findbyIdService = (id) => atividades.findById(id)
 
 const updateService = (
     id,
-    descricao,
-    dia
+    descricao
     ) => 
     atividades.findOneAndUpdate(
         {_id: id},
-        {descricao,
-        dia
+        {descricao
     }, 
     {new: true}
     )

@@ -9,6 +9,6 @@ connectDatabase()
 
 app.use(express.json())
 app.use('/list', Route)
-
+app.use(cors())
 
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`))
