@@ -1,6 +1,7 @@
 import express from 'express'
 import Route from "./src/routes/route.js"
 import connectDatabase from './src/database/db.js'
+import cors from 'cors'
 
 const app = express()
 const port = 3000;
