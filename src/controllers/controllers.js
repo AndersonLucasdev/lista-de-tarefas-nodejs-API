@@ -4,11 +4,11 @@ import atividadeService from "../services/services.js"
 const cadastro = async (req, res) => {
     try {
         const {
-            descricao, dia
+            descricao
         } = req.body
 
         // verifica se um campo não foi digitado
-        if (!descricao || !dia) {
+        if (!descricao) {
             res.status(400).send({message: "há um campo vazio"})
 
         } else {
@@ -23,8 +23,7 @@ const cadastro = async (req, res) => {
                     {  
                         user: {
                             id: atividade._id,
-                            descricao,
-                            dia
+                            descricao
                         },
                         message: "atividade cadastrada com sucesso"
                     }
